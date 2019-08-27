@@ -33,4 +33,5 @@ Optimizacion Bayesiana
 ## TAREA
 1. Check In
 2. Configuracion Google Cloud
-3. Un XXX en la carpeta R
+3. Un sendero en la carpeta R
+
