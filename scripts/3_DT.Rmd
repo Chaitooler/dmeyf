@@ -44,6 +44,8 @@ v_semillas <- as.vector(unlist(x))
 v_semillas
 ```
 
+
+
 Veamos cuantos números primos obtuvimos en esta lista de números aleatorios:
 
 ```{r}
