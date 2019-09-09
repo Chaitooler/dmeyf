@@ -34,3 +34,13 @@ Variedad= Superficie en muchas dimensiones
 Gradiente?
 Random search? No es malo, gana casi lo mismo que el grid
 
+Optimizacion bayesiana!!! FTW
+
+Pruebas y puntos, Tratar de consturir esa superficie con un modelo regresivo entre los puntos
+No es un buen metodo de optimizacion, pero es muy rapido porque lo hace con muy poca muestra
+
+(Ver ant colony, geneticos, post, metodos de optimizacion mejores, pero son carisimos)
+
+
+La clase que viene Logistica con Ks
+
