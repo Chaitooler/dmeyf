@@ -89,3 +89,15 @@ Arbol va cortando al plano ortogonalmente
 Como hago cortes raros? como una estrella?
 
 Combinar modelos porque la capacidad ddiscriminativa de uno solo no es suficiente para predecir el modelo.
+
+Podemos ir sacando partes para que pueda cortar optimamente.
+MODELOS MUY DISTINTOS
+
+Colash.github.io/ NEURAL NETS MANIFOLDS TOPOLOGY
+Cortar datos como los SVM
+
+Red corta con regresiones (rectas)
+KNN separa con diagramas de Voronoi (clusters)
+
+Redes con mas capas
+Deformar el espacio para encontrar una recta que lo pueda separar!
