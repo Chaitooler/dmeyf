@@ -46,7 +46,7 @@ Estrategias de entrenamiento
 
 Ejecuto todo sobre un mes, y valido a n meses.
 
+Train-Valid // Test
 
-
-
+HO siempre con T y V
 
