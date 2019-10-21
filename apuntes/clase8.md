@@ -26,8 +26,27 @@ VPC/IPCx100
 Se hace en el momento que ya todo lo otro esta resuelto
 Vamos a usar mlrMBO. Tiene muchas mas opciones de configuracion
 
+Optimizacion bayesiana
+
 YHAT regresion no parametrica y la interpola. Pasa por todo los puntos
 FOCUSSEARCH > Parametro para el mejor punto.
 
-Encontrar los minimos de una funcion real
+Encontrar los minimos de una funcion real.
+ES BARATO
+Hay mas opciones de busqueda ademas del Gausseano.
+Hay mas parametros.
+## Ver si se puede optimizar con esto
+
+No se molesta entender todo, busca los max y trata de explicar desde ahi.
+
+Trabajar con el riudo: muchas corridas y promedio sobre el mismo punto.
+
+# Segunda parte
+Estrategias de entrenamiento
+
+Ejecuto todo sobre un mes, y valido a n meses.
+
+
+
+
 
