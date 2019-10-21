@@ -21,3 +21,13 @@ Corriente estructuralista vs monetarista
 Deflactar:
 VPC/IPCx100
 
+# HiperOptimizacion
+
+Se hace en el momento que ya todo lo otro esta resuelto
+Vamos a usar mlrMBO. Tiene muchas mas opciones de configuracion
+
+YHAT regresion no parametrica y la interpola. Pasa por todo los puntos
+FOCUSSEARCH > Parametro para el mejor punto.
+
+Encontrar los minimos de una funcion real
+
