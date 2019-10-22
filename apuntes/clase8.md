@@ -50,3 +50,21 @@ Train-Valid // Test
 
 HO siempre con T y V
 
+Sacar jugo a abril es el mejor objetivo.
+
+
+Opciones (estrategias)
+
+# 1
+CV - M1
+Test -M+2
+
+# 2
+Otra:
+Train -M1
+Valid -M+2
+Test -M+4
+
+# 3
+O validar con la mitad de un mes y testear con la otra
+
