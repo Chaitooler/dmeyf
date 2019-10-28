@@ -200,6 +200,7 @@ Great! En el transcurso de la ejecución pudimos percibir los tiempos. Pero pong
 
 ggplot(resultado[type == "train"],aes(tam_ds,tiempo))  + geom_point()
 
+resultado[type == "train", ]
 ```
 
 * ¿cómo entiende que afecta el N al tiempo de procesamiento?
@@ -335,7 +336,7 @@ fwrite(resultados_md, "resultados_md.csv")
 ```
 ```{r}
 resultados_md <- fread("resultados_md.csv")
-
+resultados_md[type == "test", .(auc=mean(auc)),by=md]
 res_md_graph <- resultados_md[type == "test", .(auc=mean(auc)), by=md] 
 ggplot(res_md_graph, aes(md,auc)) + geom_line()
 
@@ -392,6 +393,7 @@ Y buscamos el máximo valor encontrado en la búsqueda:
 
 ```{r}
 res_cp_md_graph[auc == max(auc),]
+res_cp_md_graph
 ```
 
 Sin mucho más preludio, buscamos la mejor combinación usando un Grid Search:
