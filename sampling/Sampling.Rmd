@@ -203,7 +203,10 @@ TRAINING:
 ```{r}
 library(dplyr)
 
-ctrl <- trainControl(
+ctrl <- trainControl(method='repeatedcv',
+                     number=3,
+                     repeats=2,
+                     verboseIter = TRUE,
                      classProbs = TRUE,
                      summaryFunction = twoClassSummary)
 ```
@@ -238,7 +241,7 @@ down_feb1 = down_feb %>%
 t0 <- Sys.time()
 
 down_fit <- train(Class ~ ., data = down_feb1,
-                  method = 'xgbTree',
+                  method = 'xgbLinear',
                   metric = 'ROC',
                   trControl = ctrl,
                   na.action = na.omit)
@@ -258,7 +261,7 @@ up_feb1 = up_feb %>%
 t0 <- Sys.time()
 
 up_fit <- train(Class ~ ., data = up_feb1,
-                  method = 'xgbTree',
+                  method = 'xgbLinear',
                   metric = 'ROC',
                   trControl = ctrl,
                   na.action = na.omit)
@@ -279,7 +282,7 @@ smote_train1 = smote_train %>%
 t0 <- Sys.time()
 
 smote_fit <- train(Class ~ ., data = smote_train1,
-                  method = 'xgbTree',
+                  method = 'xgbLinear',
                   metric = 'ROC',
                   trControl = ctrl,
                   na.action = na.omit)
@@ -299,7 +302,7 @@ rose_train1 = rose_train$data %>%
 t0 <- Sys.time()
 
 rose_fit <- train(Class ~ . ,data = rose_train1,
-                  method = 'xgbTree',
+                  method = 'xgbLinear',
                   metric = 'ROC',
                   trControl = ctrl,
                   na.action = na.omit)
