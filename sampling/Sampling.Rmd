@@ -145,9 +145,10 @@ down_feb = downSample(x = febrero, y = as.factor(clases_febrero))
 
 
 table(down_feb$Class)  
-  
+
 
 ```
+
 
 
 
@@ -169,8 +170,170 @@ table(up_feb$Class)
 
 ```
 
+
 SMOTE
 ```{r}
+library(DMwR)
+set.seed(vsemillas[1])
 
+febrero_aux = febrero
+febrero_aux$Class = as.factor(clases_febrero)
+
+smote_train = SMOTE(Class ~ ., data=febrero_aux)
+
+table(smote_train$Class)
 
 ```
+
+ROSE
+```{r}
+library(ROSE)
+set.seed(vsemillas[1])
+
+febrero_aux = febrero
+febrero_aux$Class = as.factor(clases_febrero)
+
+rose_train = ROSE(Class ~ ., data=febrero_aux)
+
+table(rose_train$data$Class)
+
+```
+
+TRAINING:
+```{r}
+library(dplyr)
+
+ctrl <- trainControl(
+                     classProbs = TRUE,
+                     summaryFunction = twoClassSummary)
+```
+
+```{r}
+set.seed(vsemillas[1])
+
+t0 <- Sys.time()
+
+aux2 = febrero_aux %>% 
+  mutate(Class = factor(Class, 
+                        labels = make.names(levels(Class))))
+
+orig_fit <- train(Class ~ ., data = aux2,
+                  method = 'xgbTree',
+                  metric = 'ROC',
+                  trControl = ctrl,
+                  na.action = na.omit)
+
+t1 <- Sys.time()
+tiempo <-  as.numeric(  t1 - t0, units = "secs")
+print(paste0("Tiempo: " , tiempo, collapse = " "))
+```
+
+```{r}
+set.seed(vsemillas[1])
+
+down_feb1 = down_feb %>% 
+  mutate(Class = factor(Class, 
+                        labels = make.names(levels(Class))))
+
+t0 <- Sys.time()
+
+down_fit <- train(Class ~ ., data = down_feb1,
+                  method = 'xgbTree',
+                  metric = 'ROC',
+                  trControl = ctrl,
+                  na.action = na.omit)
+
+t1 <- Sys.time()
+tiempo <-  as.numeric(  t1 - t0, units = "secs")
+print(paste0("Tiempo: " , tiempo, collapse = " "))
+```
+
+```{r}
+set.seed(vsemillas[1])
+
+up_feb1 = up_feb %>% 
+  mutate(Class = factor(Class, 
+                        labels = make.names(levels(Class))))
+
+t0 <- Sys.time()
+
+up_fit <- train(Class ~ ., data = up_feb1,
+                  method = 'xgbTree',
+                  metric = 'ROC',
+                  trControl = ctrl,
+                  na.action = na.omit)
+
+t1 <- Sys.time()
+tiempo <-  as.numeric(  t1 - t0, units = "secs")
+print(paste0("Tiempo: " , tiempo, collapse = " "))
+```
+
+
+```{r}
+set.seed(vsemillas[1])
+
+smote_train1 = smote_train %>% 
+  mutate(Class = factor(Class, 
+                        labels = make.names(levels(Class))))
+
+t0 <- Sys.time()
+
+smote_fit <- train(Class ~ ., data = smote_train1,
+                  method = 'xgbTree',
+                  metric = 'ROC',
+                  trControl = ctrl,
+                  na.action = na.omit)
+
+t1 <- Sys.time()
+tiempo <-  as.numeric(  t1 - t0, units = "secs")
+print(paste0("Tiempo: " , tiempo, collapse = " "))
+```
+
+```{r}
+set.seed(vsemillas[1])
+
+rose_train1 = rose_train$data %>% 
+  mutate(Class = factor(Class, 
+                        labels = make.names(levels(Class))))
+
+t0 <- Sys.time()
+
+rose_fit <- train(Class ~ . ,data = rose_train1,
+                  method = 'xgbTree',
+                  metric = 'ROC',
+                  trControl = ctrl,
+                  na.action = na.omit)
+
+t1 <- Sys.time()
+tiempo <-  as.numeric(  t1 - t0, units = "secs")
+print(paste0("Tiempo: " , tiempo, collapse = " "))
+```
+
+Veamos las metricas:
+```{r}
+outside_models <- list(original = orig_fit,
+                       down = down_fit,
+                       up = up_fit,
+                       SMOTE = smote_fit,
+                       ROSE = rose_fit)
+
+outside_resampling <- resamples(outside_models)
+
+test_roc <- function(model, data) {
+  library(pROC)
+  roc_obj <- roc(data$Class, 
+                 predict(model, data, type = "prob")[, "Class1"],
+                 levels = c("Class2", "Class1"))
+  ci(roc_obj)
+  }
+
+outside_test <- lapply(outside_models, test_roc, data = imbal_test)
+outside_test <- lapply(outside_test, as.vector)
+outside_test <- do.call("rbind", outside_test)
+colnames(outside_test) <- c("lower", "ROC", "upper")
+outside_test <- as.data.frame(outside_test)
+
+summary(outside_resampling, metric = "ROC")
+```
+
+
