@@ -13,22 +13,582 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+rm( list=ls() )
+gc()
 
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+library( "data.table" )
+
+febrero  <-  fread("../datasets/201902.txt", header=TRUE, sep="\t")
+abril <-  fread("../datasets/201904.txt", header=TRUE, sep="\t")
+
+# Transformamos nuestra clase ternaria en una clase binaria
+febrero$clase_binaria <- factor(ifelse(febrero$clase_ternaria == "BAJA+2", 1, 0))
+abril$clase_binaria <- factor(ifelse(abril$clase_ternaria == "BAJA+2", 1, 0))
+
+# MUY IMPORTANTE!!!! =)
+febrero$clase_ternaria <- NULL
+
+library( "ROCR" )
+
+vsemilla <- c(810757,482071,340979,446441,917513)
+
+fganancia = function(probabilidades, clase, punto_corte=0.025) {
+  return(sum(
+    (probabilidades >= punto_corte) * ifelse( clase == "1", 19500, -500 ))
+  )
+}
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+
+fmetricas <- function(probs, clases, cutoff=0.025, proporcion=1, label="", type="", semilla=NA) {
+  
+  # AUC
+  binaria  <-  as.numeric(clases == "1")
+  roc_pred <-  ROCR::prediction(probs, binaria, label.ordering=c( 0, 1))
+  auc_t <-  ROCR::performance( roc_pred,"auc"); 
+  auc <- unlist(auc_t@y.values)
+  
+  # Ganancia
+  ganancia <- fganancia(probs, binaria) 
+  
+  # Ganancia normalizada, proyectamos la ganancia según el porcentaje de la muestra.
+  ganancia_normalizada <- ganancia / proporcion
+  
+  
+  # Calcular nuevo punto de corte
+  puntos_corte <- sort(unique(probs))
+  ganancia_all <- sapply(puntos_corte, fganancia, probabilidades=probs, clase=clases)
+  ds2 <- as.data.frame(cbind(puntos_corte, ganancia_all))
+  max_ganancia <- max(ds2$ganancia_all)
+  max_gan_normalizada <- max(ds2$ganancia_all)/proporcion
+  max_punto_corte <- ds2[ which(ds2$ganancia_all ==  max_ganancia), 1] 
+  
+  return(data.table(label, semilla, type, ganancia, ganancia_normalizada, auc, max_punto_corte, max_gan_normalizada))
+
+}
+
+```
+
+
+
+```{r}
+
+library(rpart)
+library(caret)
+
+fmodelo_rpart <- function (datos, # datos de entrada para modelar
+                            clase, # Variable clase
+                            prop, # Proporción de entrenamiento
+                            n = 0, # Cantidad de elementos de la no clase eventos para train 
+                            semillas, # Semillas a usar
+                            etiqueta = "", # referencia del modelo
+                            cp =  0.01, ms = 20, mb = 7, md = 30) { # parámetros con valores por default
+  
+  resultados <- data.table()
+  
+  for (s in semillas) {
+    set.seed(s)
+    train_casos <- createDataPartition( datos[, get(clase)], p = prop, list = FALSE)
+    train  <-  datos[  train_casos, ]
+    test   <-  datos[ -train_casos, ]
+    
+    
+    if (n > 0 )
+      muestra <- rbind(train[train[,get(clase)] == "1",], train[train[,get(clase)] != "1",][sample.int(n,n=nrow(train)),])
+    else
+      muestra <- train
+    
+    tam_ds <- dim(muestra)[1]
+
+    t0 <- Sys.time()
+    modelo <- rpart(formula(paste(clase, "~ .")), data = muestra, 
+                    xval=0, 
+                    cp=cp, 
+                    minsplit=ms, 
+                    minbucket=mb, 
+                    maxdepth = md )
+    t1 <- Sys.time()
+    
+    train_prediccion <- as.data.frame(predict(modelo, train , type = "prob"))
+    test_prediccion <- as.data.frame(predict(modelo, test , type = "prob"))
+    
+    tiempo <-  as.numeric(  t1 - t0, units = "secs")
+
+    # Sacamos entrenamiento     
+    resultados <- rbindlist(list(
+                    resultados,
+                        cbind (
+                          fmetricas(test_prediccion$`1`,
+                                test[,get(clase)],
+                                proporcion = (1-prop), type = "test",
+                                label=etiqueta, semilla=s),
+                          tiempo, cp, ms, mb, md, tam_ds),
+                        cbind (
+                          fmetricas(train_prediccion$`1`,
+                                train[,get(clase)],
+                                proporcion = prop, type = "train",
+                                label=etiqueta, semilla=s),
+                          tiempo, cp, ms, mb, md, tam_ds)
+    ))
+  }
+  
+  return(resultados)
+}
+```
+
+```{r}
+n_vector <- c(2000, 3000, 4000, 5000, 10000, 20000, 30000, 50000, 80000, 100000, 0) # Con 0, se entrena con todo
+
+# El for no es la forma más rápida de aplicar una función a un vector, pero cuando son pocas iteraciones
+# es más que válido.
+resultado <- data.table()
+
+for (i in n_vector) {
+  print(paste0("Ejecutando para n= ", i))
+  r <- fmodelo_rpart(febrero, "clase_binaria",
+                     prop = 0.7,
+                     n = i,
+                     semillas = vsemilla[1:1], # Solo una semilla vamos a usar 
+                     cp = 0.001)
+  resultado <- rbindlist(list(resultado, r))
+}
+```
+
+Great! En el transcurso de la ejecución pudimos percibir los tiempos. Pero pongamos los mismos en un gráfico.
+
+```{r}
+
+ggplot(resultado[type == "train"],aes(tam_ds,tiempo))  + geom_point()
+
+```
+
+* ¿cómo entiende que afecta el N al tiempo de procesamiento?
+
+Tratemos de ajustar con una función lineal:
+
+```{r}
+
+ggplot(resultado[type == "train"],aes(tam_ds,tiempo))  + 
+  geom_point() +
+  geom_smooth(method="lm")
+
+```
+
+Mmmm, probemos con otro tipo de ajuste que no sea lineal:
+
+
+```{r}
+
+ggplot(resultado[type == "train"],aes(tam_ds,tiempo))  + 
+  
+  geom_point() +
+  geom_smooth(method="lm", formula = y ~ poly(x, 2)) 
+
+```
+
+Interesante no? Igualmente, nuestras pruebas son muy básicas. Tomemos los resultados como un simple ejercicio.
+
+Lo que nos interesa saber, sin embargo, es si podemos usar estos árboles que tomaron menos de un segundo en entrenar como árboles para maximizar la ganancia. Como usamos un linda función que armamos, es simple poder responder esta pregunta, ya que el conjunto de `test` lo dejamos intacto.
+
+Empecemos mirando el `auc`. Recordamos que estamos trabajando con una sola semilla, por lo cual esto es simplemente orientativo.
+
+```{r}
+dcast(resultado, tam_ds ~ type , value.var = "auc", fun.aggregate = mean) 
+
+```
+```{r}
+resultado
+```
+
+```{r}
+dcast(resultado, tam_ds ~ type , value.var = "ganancia_normalizada", fun.aggregate = mean) 
+
+```
+
+```{r}
+
+dcast(resultado, tam_ds ~ type , value.var = "max_punto_corte", fun.aggregate = mean) 
+
+```
+
+
+
+
+Sampling:
+Note that this type of sampling is different from splitting the data into a training and test set. You would never want to artificially balance the test set; its class frequencies should be in-line with what one would see “in the wild”. Also, the above procedures are independent of resampling methods such as cross-validation and the bootstrap.
+
+
+Veremos el balance de nuestro modelo
+```{r}
+
+table()
+
+```
+
+down-sampling: randomly subset all the classes in the training set so that their class frequencies match the least prevalent class. For example, suppose that 80% of the training set samples are the first class and the remaining 20% are in the second class. Down-sampling would randomly sample the first class to be the same size as the second class (so that only 40% of the total training set is used to fit the model). caret contains a function (downSample) to do this.
+
+
+
+up-sampling: randomly sample (with replacement) the minority class to be the same size as the majority class. caret contains a function (upSample) to do this.
+hybrid methods: techniques such as SMOTE and ROSE down-sample the majority class and synthesize new data points in the minority class. There are two packages (DMwR and ROSE) that implement these procedures.
+
+
+
+Issues:
+Firstly, during model tuning the holdout samples generated during resampling are also glanced and may not reflect the class imbalance that future predictions would encounter. This is likely to lead to overly optimistic estimates of performance.
+Secondly, the subsampling process will probably induce more model uncertainty. Would the model results differ under a different subsample? As above, the resampling statistics are more likely to make the model appear more effective than it actually is.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### XGBOOST
+
+```{r}
+
+library(xgboost)
+
+clases_febrero <- as.numeric(febrero$clase_binaria) - 1
+febrero$clase_binaria <- NULL
+
+dtrain   <- xgb.DMatrix( data = data.matrix(febrero),  label = clases_febrero, missing=NA )
+
+```
+
+```{r}
+set.seed(vsemilla[1])
+t0 <- Sys.time()
+
+modelo1 = xgb.cv( 
+				data = dtrain,  
+				missing = NA,
+				stratified = TRUE,       
+				
+				nround= 20,
+				nfold = 5,
+				
+				watchlist = list(metric='auc'),
+				early_stopping_rounds = 50,
+				
+				
+				# feval = ganancia,
+				eval_metric= "auc",
+				
+				maximize =TRUE,
+				
+				# subsample ratio of the training instance. Setting it to 0.5 means that xgboost randomly collected half of the data instances to grow trees and this will prevent overfitting. It makes computation shorter (because less data to analyse). It is advised to use this parameter with eta and increase nround. Default: 1
+				
+				subsample = 1, 
+				
+				# subsample ratio of columns when constructing each tree
+	 			colsample_bytree = 1, 
+				
+				# eta control the learning rate: scale the contribution of each tree by a factor of 0 < eta < 1 when it is added to the current approximation. Used to prevent overfitting by making the boosting process more conservative. Lower value for eta implies larger value for nrounds: low eta value means model more robust to overfitting but slower to compute.
+		    eta = 0.3,
+				
+				# min_child_weight minimum sum of instance weight (hessian) needed in a child. If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning. In linear regression mode, this simply corresponds to minimum number of instances needed to be in each node. The larger, the more conservative the algorithm will be.
+				
+ 				min_child_weight = 1, 
+				
+				# max_depth maximum depth of a tree.
+	 			max_depth = 6,
+				
+				# L1 regularization
+		 		alpha = 0, 
+				# L2 regularization
+				lambda = 0, 
+				
+				#gamma minimum loss reduction required to make a further partition on a leaf node of the tree. the larger, the more conservative the algorithm will be.
+				
+				# gamma = 10,
+				
+				# base_score [default=0.5] : the initial prediction score of all instances, global bias
+
+				# objective specify the learning task and the corresponding learning objective, users can pass a self-defined function to it. The default objective options are below ... 
+				
+ 				objective="binary:logistic",
+				
+				verbose = 2
+			)
+
+t1 <- Sys.time()
+
+print(paste0("El tiempo que tardó en ajustar XGB es:", as.numeric(  t1 - t0, units = "secs"), collapse = " "))
+
+```
+
+
+Veamos el modelo resultante
+
+```{r}
+modelo1$best_iteration
+modelo1$best_ntreelimit
+```
+
+Probemos sumando dos parámetros más:
+
+```{r}
+
+set.seed(vsemilla[1])
+t0 <- Sys.time()
+
+modelo1 = xgb.cv( 
+				data = dtrain,  
+				missing = NA,
+				stratified = TRUE,       
+				nround= 20,
+				nfold = 5,
+				watchlist = list(metric='auc'),
+				early_stopping_rounds = 50,
+				eval_metric= "auc",
+				maximize =TRUE,
+				subsample = 1, 
+	 			colsample_bytree = 1, 
+		    eta = 0.3,
+ 				min_child_weight = 1, 
+	 			max_depth = 6,
+		 		alpha = 0, 
+				lambda = 0, 
+ 				objective="binary:logistic",
+				####
+				tree_method = "hist",
+				grow_policy="lossguide",
+				####
+				verbose = 2
+			)
+
+t1 <- Sys.time()
+
+print(paste0("El tiempo que tardó en ajustar XGB es:", as.numeric(  t1 - t0, units = "secs"), collapse = " "))
+
+```
+
+* ¿Por qué se dio ese diferencia tan grande de tiempos?
+
+Vemos como obtener el modelo final:
+
+```{r}
+
+modelo_xgb_1 = xgb.train( 
+				data = dtrain,  
+				missing = NA,
+				nround= 20,
+    	  eval_metric= "auc", 
+				maximize =TRUE,
+				objective="binary:logistic",
+			  verbose = 2
+			)
+```
+
+```{r}
+
+clases_abril <- as.numeric(abril$clase_binaria) - 1
+
+abril$clase_ternaria <- NULL
+abril$clase_binaria <- NULL
+
+abril_pred <- predict(modelo_xgb_1, data.matrix(abril),  type = "prob")
+
+fmetricas(abril_pred, clases_abril)
+
+```
+
+¿Interesante no? 
+
+Cambiando la función de control
+
+```{r}
+
+ganancia   <- function(probs, clases) 
+{
+
+   vlabels <- getinfo(clases, "label")
+
+   ganancia_calculada  <- sum(    (probs > 0.025 ) * 
+		                   ifelse( vlabels== 1, 19500, -500 )   
+              		     ) 
+   return(  list(metric = "ganancia", value = ganancia_calculada/ 0.2 )  )
+}
+
+kbase_score  <-  sum( clases_febrero ) / length(clases_febrero)
+
+set.seed(vsemilla[1])
+
+modelo_xgb_gan = xgb.cv( 
+				data = dtrain,  
+				missing = NA,
+				stratified = TRUE,       
+				nfold = 5 , 
+				objective="binary:logistic",
+				nround= 50, 
+				early_stopping_rounds = 20,
+				base_score = kbase_score ,
+				feval = ganancia,
+				tree_method = "hist",
+				grow_policy="lossguide",
+				 
+				maximize =TRUE,
+				verbose = 2
+			)
+```
+
+Vemos un fuerte sobreajuste.
+```{r}
+modelo_xgb_gan$best_iteration
+
+modelo_xgb_gan$evaluation_log
+
+```
+
+
+# Aplicamos al OOT
+
+```{r}
+
+modelo_xgb_2 = xgb.train( 
+				data = dtrain,  
+				missing = NA,
+				####
+				nround= 50,
+				####
+				maximize =TRUE,
+				objective="binary:logistic",
+				tree_method = "hist",
+				grow_policy="lossguide",
+			  verbose = 2
+			)
+
+abril_pred <- predict(modelo_xgb_2, data.matrix(abril),  type = "prob")
+
+fmetricas(abril_pred, clases_abril)
+
+```
+
+Vaya, parece que no siempre lo mejor en test, es lo mejor mejor...
+
+Ahora exploramos algunos de los otros atributos que tiene el paquete `XGBoost`, el primero es la importancia de variables:
+
+```{r}
+
+xgb.importance(colnames(dtrain), model = modelo_xgb_2)
+
+```
+
+* ¿Qué diferencias nota con respecto con la importancia de variables del `RF`?
+
+Juguemos una vez más con una variable canario:
+
+```{r}
+febrero_can <- febrero
+febrero_can$canario <- runif(nrow(febrero))
+
+dtrain2   <- xgb.DMatrix( data = data.matrix(febrero_can),  label = clases_febrero, missing=NA )
+
+
+modelo_xgb_3 = xgb.train( 
+				data = dtrain2,  
+				missing = NA,
+				nround= 11,
+				maximize =TRUE,
+				objective="binary:logistic",
+				tree_method = "hist",
+				grow_policy="lossguide",
+			  verbose = 2
+			)
+
+
+```
+
+Veamos en que posición aparece la variable canario:
+
+```{r}
+xgb.importance(colnames(dtrain2), model = modelo_xgb_3)
+```
+
+Vemos un menor sobreajuste en la configuración por defecto del `XGBoost` que la del `RF`. Sin embargo, todavía hay y reducir ese sobreajuste puede sumarnos mucho valor.
+
+* ¿Cuáles son los parámetros que nos ayudan a controlar el `overfitting`?
+
+Revise los parámetros, elija sus rangos y haga autotunning con una búsqueda bayesina:
+
+```{r}
+
+# Simplificada para devolver solamente la ganancia sobre test
+fmodelo_xgboost <- function (datos, clase, params, nround=50) {
+  
+  
+  kbase_score  <-  sum( clase ) / length(clase)
+  
+  
+  dtrain   <- xgb.DMatrix( data = data.matrix(datos),  label = clase, missing=NA )
+
+  
+  modelo = xgb.cv( 
+  				data = dtrain,  
+  				missing = NA,
+  				stratified = TRUE,       
+  				nfold = 5 , 
+  				objective="binary:logistic",
+  				nround= nround, 
+  				early_stopping_rounds = 20,
+  				base_score = kbase_score ,
+  				feval= ganancia,
+				  maximize =TRUE,
+				  eta = params[["eta"]],
+  				tree_method = "hist",
+				  grow_policy="lossguide"
+  )
+  return(max(modelo$evaluation_log$test_ganancia_mean))
+}
+
+# fmodelo_xgboost(febrero, clases_febrero, params=list(eta=.3))
+
+```
+Hay muchos detalles que mejorar, y no sólo los parámetros. Proponga mejoras en la forma de trabajar en el búsqueda Bayesiana.
+
+```{r, eval=FALSE}
+objetivo <- function (eta) {
+  
+   
+  r <- fmodelo_xgboost(febrero, clases_febrero, 
+                      params=list(eta=eta))
+
+  list( Score = r, Pred = 0 )
+}
+
+OPT_XGB <- BayesianOptimization( objetivo,
+           	bounds = list(eta =  c( 0,   1)),
+	   init_points = 50,  n_iter = 50,
+	   acq = "ucb", kappa = 2.576, eps = 0.001,
+	   verbose = TRUE
+	   )
+
+fwrite( as.data.table(OPT_XGB$History), "OPT_XGB.csv" )
+```
+
