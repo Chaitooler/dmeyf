@@ -273,6 +273,8 @@ print(paste0("Tiempo: " , tiempo, collapse = " "))
 
 
 ```{r}
+library(dplyr)
+library(caret)
 set.seed(vsemillas[1])
 
 smote_train1 = smote_train %>% 
@@ -337,3 +339,40 @@ print(mean(rose_fit$results$ROC))
 ```{r}
 febrero_aux$Class
 ```
+
+
+
+```{r}
+c = ifelse (smote_train1$Class=='X0',0,1)
+d = smote_train1
+d$Class <- NULL
+
+dtrain   <- xgb.DMatrix( data = data.matrix(d),  label = c, missing=NA )
+
+t0 <- Sys.time()
+
+set.seed(vsemillas[1])
+modelo_xgb1 <- xgb.cv( 
+    data = dtrain,  
+    missing = NA,
+    stratified = TRUE,       
+    nround= 25,
+    nfold = 5,
+    watchlist = list(metric='auc'),
+    eval_metric= "auc",
+    maximize =TRUE,
+    objective="binary:logistic",
+    verbose = TRUE
+)
+
+t1 <- Sys.time()
+tiempo <-  as.numeric(  t1 - t0, units = "secs")
+print(paste0("Tiempo: " , tiempo, collapse = " "))
+
+max(modelo_xgb1$evaluation_log$test_auc_mean)
+
+```
+
+
+
+Probar con el conjunto de test (Abril)!
