@@ -34,3 +34,16 @@ Cambiarle la clase a los datos como cuando ordenas en el excell y no pones toodo
 Buscar Randomization Test
 Permutation Test
 Markus Ojala
+
+Un punto de corte sirve solo si esta por encima de la cascara convexa randomizada.
+
+Parametros inutiles en el Gradient Boost
+Lambda
+Alfa
+Gamma
+Max_Depth
+MIN_GAIN_TO_SPLIT
+
+Parametros que si sirven:
+ETA
+ColsampleByTree
