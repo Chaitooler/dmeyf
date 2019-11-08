@@ -19,3 +19,18 @@ LA culpa del overfitting era del algoritmo.
 VER CONVEX HULL
 
 Puntos de corte, metodo eligen puntos de la cascara convexa de la curva ROC.
+
+
+
+Soluciones para MCPs
+-Nueva data (conjunto de test)
+-CrossValid
+-Bonferroni Adjustment
+-Class Randomization (Permutation
+
+Permutacion de la clase:
+Cambiarle la clase a los datos como cuando ordenas en el excell y no pones toodo.
+
+Buscar Randomization Test
+Permutation Test
+Markus Ojala
