@@ -14,3 +14,8 @@ Lo que pasaba realmente, es que cortaban mal el arbol. El ser humano genera el o
 Usar max depths, min split min bucket es aberrante cuando podriamos hacer un test estadistico adecuado para multiples comparaciones.
 
 LA culpa del overfitting era del algoritmo.
+
+
+VER CONVEX HULL
+
+Puntos de corte, metodo eligen puntos de la cascara convexa de la curva ROC.
