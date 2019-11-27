@@ -39,11 +39,11 @@ entrenar_modelo <- function(dataset,
   
   xgb.train( 
     data= dtrain,
-    objective
-    tree_method,
-    max_bin,
-    eta,
-    nrounds, 
+    objective=objective,
+    tree_method = tree_method,
+    max_bin= max_bin,
+    eta =eta,
+    nrounds = nrounds, 
     base_score= mean( getinfo(dtrain, "label") )
   )
 }
