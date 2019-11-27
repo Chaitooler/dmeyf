@@ -101,4 +101,4 @@ mod = entrenar_modelo(ds)
 pred = validar_test(mod, ds)
 imprimir_resultados(pred, mod, punto_corte)
 
-print(sum(prediccion_final[ prob_positivo>punto_corte,ifelse( clase01 == 1  , 19500, -500) ] ))
+print(sum(pred[ prob_positivo>punto_corte,ifelse( clase01 == 1  , 19500, -500) ] ))
