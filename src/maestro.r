@@ -40,7 +40,7 @@ entrenar_modelo <- function(dataset,
   xgb.train( 
     data= dtrain,
     param,
-    base_score= mean( getinfo(dgeneracion, "label") )
+    base_score= mean( getinfo(dtrain, "label") )
   )
 }
 
