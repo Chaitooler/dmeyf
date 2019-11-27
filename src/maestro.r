@@ -2,9 +2,10 @@ library(xgboost)
 library( "data.table" )
 
 
-set.seed(102191)
+vsemillas <- c(102191,810757,482071,340979,446441,917513)
+set.seed(vsemillas[1])
 
-
+numero_experimento = 1
 
 dataset_dir = "~/cloud/cloud1/datasets/"
 dataset_name = "paquete_premium_hist.txt.gz"
