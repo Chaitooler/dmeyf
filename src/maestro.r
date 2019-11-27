@@ -25,21 +25,25 @@ mes_test = 201904
 entrenar_modelo <- function(dataset,
                   mes_min = 201805,
                   mes_max = 201902,
-                  param = list(
+                  
                           objective= "binary:logistic",
                           tree_method= "hist",
                           max_bin= 31,
                           eta= 0.04,
                           nrounds= 300, 
                           colsample_bytree= 0.6
-                  )) {
+                  ) {
   dtrain <- xgb.DMatrix( data = data.matrix( dataset[ foto_mes>=mes_min & foto_mes<=mes_max , !c("numero_de_cliente","clase_ternaria"), with=FALSE]),
                                  label = dataset[ foto_mes>=mes_min & foto_mes<=mes_max, clase_ternaria ]
   )
   
   xgb.train( 
     data= dtrain,
-    param,
+    objective
+    tree_method,
+    max_bin,
+    eta,
+    nrounds, 
     base_score= mean( getinfo(dtrain, "label") )
   )
 }
