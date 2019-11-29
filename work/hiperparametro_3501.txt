@@ -1,0 +1,1 @@
+experimento	metrica1_actual	metrica2_actual	canaritos_muertos_actual	metrica1_futuro	metrica2_futuro	canaritos_muertos_futuro	tiempo	pcorte	parametros	fecha	clase	programa	algoritmo	busqueda	estimacion	dataset_actual_train	dataset_actual_test	dataset_futuro_train	dataset_futuro_test	observaciones	
