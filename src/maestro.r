@@ -1,17 +1,19 @@
 library(xgboost)
 library( "data.table" )
 
-dataset_dir = "~/cloud/cloud1/datasets/"
+n_experimento = "1"
+
+dataset_dir = "E:/Chaito/Desktop/Facultad/dmeyf/data"
 dataset_name = "paquete_premium_exthist.txt.gz"
-resultados_dir = "~/cloud/cloud1/work/"
-file_probabilidades = "lineademuerte_probabilidades_UBA.txt" 
-file_entregable = "lineademuerte_entregar_UBA.txt"
-file_importancia = "lineademuerte_importancia_UBA.txt"
+resultados_dir = "E:/Chaito/Desktop/Facultad/dmeyf/work"
+file_probabilidades = paste(paste("probs", n_experimento),".txt") 
+file_entregable = paste(paste("entregar", n_experimento), ".txt")
+file_importancia = paste(paste("importancia",n_experimento),".txt")
 punto_corte = 0.025
 
 mes_test = 201904
 
-mes_min = 201805
+mes_min = 201902
 mes_max = 201902
 
 ############################
