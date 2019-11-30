@@ -3,9 +3,9 @@ library( "data.table" )
 
 n_experimento = "1"
 
-dataset_dir = "E:/Chaito/Desktop/Facultad/dmeyf/data"
-dataset_name = "paquete_premium_exthist.txt.gz"
-resultados_dir = "E:/Chaito/Desktop/Facultad/dmeyf/work"
+dataset_dir = "~/cloud/cloud1/datasets"
+dataset_name = "paquete_premium_hist.txt.gz"
+resultados_dir = "~/cloud/cloud1/work"
 file_probabilidades = paste(paste("probs", n_experimento),".txt") 
 file_entregable = paste(paste("entregar", n_experimento), ".txt")
 file_importancia = paste(paste("importancia",n_experimento),".txt")
@@ -13,7 +13,7 @@ punto_corte = 0.025
 
 mes_test = 201904
 
-mes_min = 201902
+mes_min = 201805
 mes_max = 201902
 
 ############################
@@ -36,6 +36,8 @@ entrenar_modelo <- function(dataset,
                          label = dataset[ foto_mes>=mes_min & foto_mes<=mes_max, clase_ternaria ]
   )
   
+  set.seed(102191)
+  
   xgb.train(
     data= dtrain,
     objective=objective,
@@ -43,6 +45,7 @@ entrenar_modelo <- function(dataset,
     max_bin=max_bin,
     eta=eta,
     nrounds=nrounds, 
+    colsample_bytree = colsample_bytree,
     base_score= mean( getinfo(dtrain, "label") )
   )
 }
@@ -99,11 +102,11 @@ imprimir_resultados <- function(prediccion_final, modelo, punto_corte) {
 #### MAIN
 ############################
 
-set.seed(102191)
+
 
 ds = cargar_dataset()
 mod = entrenar_modelo(ds, mes_min, mes_max)
 pred = validar_test(mod, ds, mes_test)
-#imprimir_resultados(pred, mod, punto_corte)
+imprimir_resultados(pred, mod, punto_corte)
 
 print(sum(pred[ prob_positivo>punto_corte,ifelse( clase01 == 1  , 19500, -500) ] ))

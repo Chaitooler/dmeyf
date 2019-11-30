@@ -1,0 +1,217 @@
+ numero_de_cliente     foto_mes      marketing_activo_ultimos90dias  cliente_vip         internet     
+ Min.   : 4566150   Min.   :201902   Min.   :0.0000                 Min.   :0.00000   Min.   :0.0000  
+ 1st Qu.:14465868   1st Qu.:201902   1st Qu.:1.0000                 1st Qu.:0.00000   1st Qu.:1.0000  
+ Median :22029283   Median :201902   Median :1.0000                 Median :0.00000   Median :1.0000  
+ Mean   :23454341   Mean   :201902   Mean   :0.9867                 Mean   :0.01158   Mean   :0.8982  
+ 3rd Qu.:32074111   3rd Qu.:201902   3rd Qu.:1.0000                 3rd Qu.:0.00000   3rd Qu.:1.0000  
+  cliente_edad    cliente_antiguedad mrentabilidad      mrentabilidad_annual  mcomisiones       mactivos_margen    
+ Min.   : 18.00   Min.   :  1.0      Min.   :-77009.9   Min.   :-478984      Min.   :-21269.8   Min.   :-65877.19  
+ 1st Qu.: 37.00   1st Qu.: 63.0      1st Qu.:   822.8   1st Qu.:   9499      1st Qu.:   175.5   1st Qu.:  -362.94  
+ Median : 45.00   Median :121.0      Median :  1606.9   Median :  16790      Median :   552.3   Median :   -51.85  
+ Mean   : 46.51   Mean   :129.9      Mean   :  3031.0   Mean   :  28032      Mean   :   845.5   Mean   :    47.81  
+ 3rd Qu.: 55.00   3rd Qu.:177.0      3rd Qu.:  3150.2   3rd Qu.:  29902      3rd Qu.:  1064.0   3rd Qu.:   191.65  
+ mpasivos_margen    marketing_coss_selling   tpaquete1   tpaquete2   tpaquete3   tpaquete4   tpaquete5   tpaquete6
+ Min.   :-17678.1   Min.   : 3.000         Min.   :1   Min.   :0   Min.   :0   Min.   :0   Min.   :0   Min.   :0  
+ 1st Qu.:   242.1   1st Qu.: 7.000         1st Qu.:1   1st Qu.:0   1st Qu.:0   1st Qu.:0   1st Qu.:0   1st Qu.:0  
+ Median :   728.0   Median : 8.000         Median :1   Median :0   Median :0   Median :0   Median :0   Median :0  
+ Mean   :  1820.1   Mean   : 7.834         Mean   :1   Mean   :0   Mean   :0   Mean   :0   Mean   :0   Mean   :0  
+ 3rd Qu.:  1764.0   3rd Qu.: 9.000         3rd Qu.:1   3rd Qu.:0   3rd Qu.:0   3rd Qu.:0   3rd Qu.:0   3rd Qu.:0  
+   tpaquete7         tpaquete8   tpaquete9          tcuentas     tcuenta_corriente mcuenta_corriente_Nopaquete
+ Min.   :0.00000   Min.   :0   Min.   :0.00000   Min.   :1.000   Min.   :1.000     Min.   : -15399.7          
+ 1st Qu.:0.00000   1st Qu.:0   1st Qu.:0.00000   1st Qu.:1.000   1st Qu.:1.000     1st Qu.:      0.0          
+ Median :0.00000   Median :0   Median :0.00000   Median :1.000   Median :1.000     Median :      0.0          
+ Mean   :0.01091   Mean   :0   Mean   :0.01435   Mean   :1.005   Mean   :1.004     Mean   :     40.1          
+ 3rd Qu.:0.00000   3rd Qu.:0   3rd Qu.:0.00000   3rd Qu.:1.000   3rd Qu.:1.000     3rd Qu.:      0.0          
+ mcuenta_corriente_Paquete mcuenta_corriente_dolares  tcaja_ahorro    mcaja_ahorro_Paquete mcaja_ahorro_Nopaquete
+ Min.   :-2429233          Min.   :0                 Min.   : 2.000   Min.   :   -1185     Min.   :  -2176.9     
+ 1st Qu.:    -684          1st Qu.:0                 1st Qu.: 2.000   1st Qu.:    2645     1st Qu.:      0.0     
+ Median :       0          Median :0                 Median : 2.000   Median :   11875     Median :      0.0     
+ Mean   :    2230          Mean   :0                 Mean   : 2.094   Mean   :   34996     Mean   :    496.5     
+ 3rd Qu.:       0          3rd Qu.:0                 3rd Qu.: 2.000   3rd Qu.:   33914     3rd Qu.:      0.0     
+ mcaja_ahorro_dolares mdescubierto_preacordado mcuentas_saldo      ttarjeta_debito   ctarjeta_debito_transacciones
+ Min.   : -102663     Min.   :0.000            Min.   : -2655797   Min.   :  0.000   Min.   :  0.000              
+ 1st Qu.:       0     1st Qu.:1.170            1st Qu.:      230   1st Qu.:  1.000   1st Qu.:  0.000              
+ Median :      10     Median :1.170            Median :    20846   Median :  1.000   Median :  3.000              
+ Mean   :  144476     Mean   :1.129            Mean   :   202747   Mean   :  1.338   Mean   :  6.537              
+ 3rd Qu.:   23253     3rd Qu.:1.170            3rd Qu.:    99478   3rd Qu.:  2.000   3rd Qu.: 10.000              
+ mautoservicio    ttarjeta_visa    ctarjeta_visa_transacciones mtarjeta_visa_consumo ttarjeta_master 
+ Min.   :     0   Min.   :0.0000   Min.   :  0.00              Min.   :      0       Min.   :0.0000  
+ 1st Qu.:     0   1st Qu.:1.0000   1st Qu.:  3.00              1st Qu.:   2427       1st Qu.:1.0000  
+ Median :  2176   Median :1.0000   Median :  8.00              Median :   9475       Median :1.0000  
+ Mean   :  6960   Mean   :0.9776   Mean   : 12.34              Mean   :  17509       Mean   :0.8818  
+ 3rd Qu.:  9596   3rd Qu.:1.0000   3rd Qu.: 17.00              3rd Qu.:  21664       3rd Qu.:1.0000  
+ ctarjeta_master_transacciones mtarjeta_master_consumo cprestamos_personales mprestamos_personales
+ Min.   :  0.0                 Min.   :     0          Min.   :  0.0000      Min.   :      0      
+ 1st Qu.:  0.0                 1st Qu.:     0          1st Qu.:  0.0000      1st Qu.:      0      
+ Median :  0.0                 Median :     0          Median :  0.0000      Median :      0      
+ Mean   :  2.4                 Mean   :  4291          Mean   :  0.7827      Mean   :  31768      
+ 3rd Qu.:  2.0                 3rd Qu.:  2819          3rd Qu.:  1.0000      3rd Qu.:  30065      
+ cprestamos_prendarios mprestamos_prendarios cprestamos_hipotecarios mprestamos_hipotecarios  tplazo_fijo     
+ Min.   :0.00000       Min.   :      0       Min.   :0.00000         Min.   :       0        Min.   : 0.0000  
+ 1st Qu.:0.00000       1st Qu.:      0       1st Qu.:0.00000         1st Qu.:       0        1st Qu.: 0.0000  
+ Median :0.00000       Median :      0       Median :0.00000         Median :       0        Median : 0.0000  
+ Mean   :0.01641       Mean   :   4987       Mean   :0.01699         Mean   :   20058        Mean   : 0.2123  
+ 3rd Qu.:0.00000       3rd Qu.:      0       3rd Qu.:0.00000         3rd Qu.:       0        3rd Qu.: 0.0000  
+ mplazo_fijo_dolares mplazo_fijo_pesos  tfondos_comunes_inversion mfondos_comunes_inversion_pesos
+ Min.   :       0    Min.   :       0   Min.   : 0.000            Min.   :       0               
+ 1st Qu.:       0    1st Qu.:       0   1st Qu.: 0.000            1st Qu.:       0               
+ Median :       0    Median :       0   Median : 0.000            Median :       0               
+ Mean   :   54734    Mean   :    6988   Mean   : 0.074            Mean   :   19178               
+ 3rd Qu.:       0    3rd Qu.:       0   3rd Qu.: 0.000            3rd Qu.:       0               
+ mfondos_comunes_inversion_dolares    ttitulos          mtitulos         tseguro_vida_mercado_abierto
+ Min.   :       0                  Min.   : 0.0000   Min.   :        0   Min.   :0.0000              
+ 1st Qu.:       0                  1st Qu.: 0.0000   1st Qu.:        0   1st Qu.:0.0000              
+ Median :       0                  Median : 0.0000   Median :        0   Median :0.0000              
+ Mean   :   11366                  Mean   : 0.1437   Mean   :    64053   Mean   :0.3059              
+ 3rd Qu.:       0                  3rd Qu.: 0.0000   3rd Qu.:        0   3rd Qu.:0.0000              
+  tseguro_auto     tseguro_vivienda tseguro_accidentes_personales tcaja_seguridad   mbonos_corporativos
+ Min.   :0.00000   Min.   :0.0000   Min.   :0.0000                Min.   :0.00000   Min.   :0          
+ 1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.0000                1st Qu.:0.00000   1st Qu.:0          
+ Median :0.00000   Median :0.0000   Median :0.0000                Median :0.00000   Median :0          
+ Mean   :0.02576   Mean   :0.1411   Mean   :0.1826                Mean   :0.08965   Mean   :0          
+ 3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:0.0000                3rd Qu.:0.00000   3rd Qu.:0          
+ mmonedas_extranjeras minversiones_otras  tplan_sueldo      mplan_sueldo      mplan_sueldo_manual
+ Min.   :0            Min.   :0          Min.   : 0.0000   Min.   :  -20660   Min.   :-172048    
+ 1st Qu.:0            1st Qu.:0          1st Qu.: 0.0000   1st Qu.:       0   1st Qu.:      0    
+ Median :0            Median :0          Median : 0.0000   Median :       0   Median :      0    
+ Mean   :0            Mean   :0          Mean   : 0.7517   Mean   :   33218   Mean   :    172    
+ 3rd Qu.:0            3rd Qu.:0          3rd Qu.: 1.0000   3rd Qu.:   51269   3rd Qu.:      0    
+ cplan_sueldo_transaccion tcuenta_debitos_automaticos mcuenta_debitos_automaticos ttarjeta_visa_debitos_automaticos
+ Min.   :0.000000         Min.   :  0.000             Min.   :      0             Min.   : 0.000                   
+ 1st Qu.:0.000000         1st Qu.:  0.000             1st Qu.:      0             1st Qu.: 0.000                   
+ Median :0.000000         Median :  0.000             Median :      0             Median : 1.000                   
+ Mean   :0.003614         Mean   :  1.003             Mean   :   2268             Mean   : 2.506                   
+ 3rd Qu.:0.000000         3rd Qu.:  1.000             3rd Qu.:   1668             3rd Qu.: 4.000                   
+ mttarjeta_visa_debitos_automaticos ttarjeta_master_debitos_automaticos mttarjeta_master_debitos_automaticos
+ Min.   :     0                     Min.   : 0.0000                     Min.   :     0                      
+ 1st Qu.:     0                     1st Qu.: 0.0000                     1st Qu.:     0                      
+ Median :  1106                     Median : 0.0000                     Median :     0                      
+ Mean   :  3904                     Mean   : 0.4163                     Mean   :   690                      
+ 3rd Qu.:  4680                     3rd Qu.: 0.0000                     3rd Qu.:     0                      
+ tpagodeservicios  mpagodeservicios  tpagomiscuentas   mpagomiscuentas   ccajeros_propios_descuentos
+ Min.   : 0.0000   Min.   :      0   Min.   :  0.000   Min.   :      0   Min.   : 0.0000            
+ 1st Qu.: 0.0000   1st Qu.:      0   1st Qu.:  0.000   1st Qu.:      0   1st Qu.: 0.0000            
+ Median : 0.0000   Median :      0   Median :  0.000   Median :      0   Median : 0.0000            
+ Mean   : 0.5662   Mean   :   1614   Mean   :  1.841   Mean   :   7824   Mean   : 0.2308            
+ 3rd Qu.: 0.0000   3rd Qu.:      0   3rd Qu.:  2.000   3rd Qu.:   3980   3rd Qu.: 0.0000            
+ mcajeros_propios_descuentos ctarjeta_visa_descuentos mtarjeta_visa_descuentos ctarjeta_master_descuentos
+ Min.   :-117.26             Min.   : 0.0000          Min.   :    0.00         Min.   : 0.00000          
+ 1st Qu.:   0.00             1st Qu.: 0.0000          1st Qu.:    0.00         1st Qu.: 0.00000          
+ Median :   0.00             Median : 0.0000          Median :    0.00         Median : 0.00000          
+ Mean   :  37.73             Mean   : 0.1253          Mean   :   39.37         Mean   : 0.03243          
+ 3rd Qu.:   0.00             3rd Qu.: 0.0000          3rd Qu.:    0.00         3rd Qu.: 0.00000          
+ mtarjeta_master_descuentos ccuenta_descuentos mcuenta_descuentos ccomisiones_mantenimiento
+ Min.   :    0.00           Min.   :0          Min.   :0          Min.   : 0.0000          
+ 1st Qu.:    0.00           1st Qu.:0          1st Qu.:0          1st Qu.: 0.0000          
+ Median :    0.00           Median :0          Median :0          Median : 0.0000          
+ Mean   :    9.89           Mean   :0          Mean   :0          Mean   : 0.3873          
+ 3rd Qu.:    0.00           3rd Qu.:0          3rd Qu.:0          3rd Qu.: 1.0000          
+ mcomisiones_mantenimiento ccomisiones_otras mcomisiones_otras  tcambio_monedas   ccambio_monedas_compra
+ Min.   :-8095.5           Min.   :  0.000   Min.   :-21269.8   Min.   : 0.0000   Min.   : 0.0000       
+ 1st Qu.:    0.0           1st Qu.:  6.000   1st Qu.:   175.6   1st Qu.: 0.0000   1st Qu.: 0.0000       
+ Median :    0.0           Median : 10.000   Median :   554.1   Median : 0.0000   Median : 0.0000       
+ Mean   :  304.2           Mean   :  9.803   Mean   :   852.1   Mean   : 0.3001   Mean   : 0.1403       
+ 3rd Qu.:  721.7           3rd Qu.: 12.000   3rd Qu.:  1067.1   3rd Qu.: 0.0000   3rd Qu.: 0.0000       
+ mcambio_monedas_compra ccambio_monedas_venta mcambio_monedas_venta ctransferencias_recibidas
+ Min.   :     0.0       Min.   : 0.0000       Min.   :     0.0      Min.   : 0.000000        
+ 1st Qu.:     0.0       1st Qu.: 0.0000       1st Qu.:     0.0      1st Qu.: 0.000000        
+ Median :     0.0       Median : 0.0000       Median :     0.0      Median : 0.000000        
+ Mean   :   132.8       Mean   : 0.1598       Mean   :   199.8      Mean   : 0.001741        
+ 3rd Qu.:     0.0       3rd Qu.: 0.0000       3rd Qu.:     0.0      3rd Qu.: 0.000000        
+ mtransferencias_recibidas ctransferencias_emitidas mtransferencias_emitidas cextraccion_autoservicio
+ Min.   :     0.0          Min.   :  0.00           Min.   :      0          Min.   : 0.000          
+ 1st Qu.:     0.0          1st Qu.:  0.00           1st Qu.:      0          1st Qu.: 0.000          
+ Median :     0.0          Median :  0.00           Median :      0          Median : 1.000          
+ Mean   :    32.8          Mean   :  1.23           Mean   :  12368          Mean   : 3.034          
+ 3rd Qu.:     0.0          3rd Qu.:  2.00           3rd Qu.:   8073          3rd Qu.: 5.000          
+ mextraccion_autoservicio ccheques_depositados mcheques_depositados ccheques_emitidos  mcheques_emitidos 
+ Min.   :     0           Min.   :  0.0000     Min.   :       0     Min.   :  0.0000   Min.   :       0  
+ 1st Qu.:     0           1st Qu.:  0.0000     1st Qu.:       0     1st Qu.:  0.0000   1st Qu.:       0  
+ Median :  1755           Median :  0.0000     Median :       0     Median :  0.0000   Median :       0  
+ Mean   :  9322           Mean   :  0.1868     Mean   :    5939     Mean   :  0.2108   Mean   :    4688  
+ 3rd Qu.: 14040           3rd Qu.:  0.0000     3rd Qu.:       0     3rd Qu.:  0.0000   3rd Qu.:       0  
+ ccheques_depositados_rechazados mcheques_depositados_rechazados ccheques_emitidos_rechazados
+ Min.   : 0.000000               Min.   :      0.0               Min.   : 0.000000           
+ 1st Qu.: 0.000000               1st Qu.:      0.0               1st Qu.: 0.000000           
+ Median : 0.000000               Median :      0.0               Median : 0.000000           
+ Mean   : 0.005078               Mean   :    200.8               Mean   : 0.005291           
+ 3rd Qu.: 0.000000               3rd Qu.:      0.0               3rd Qu.: 0.000000           
+ mcheques_emitidos_rechazados  tcallcenter     ccallcenter_transacciones  thomebanking    chomebanking_transacciones
+ Min.   :      0.0            Min.   :0.0000   Min.   :  0.0000          Min.   :0.0000   Min.   :   0.00           
+ 1st Qu.:      0.0            1st Qu.:0.0000   1st Qu.:  0.0000          1st Qu.:1.0000   1st Qu.:   0.00           
+ Median :      0.0            Median :0.0000   Median :  0.0000          Median :1.0000   Median :  10.00           
+ Mean   :    164.3            Mean   :0.1539   Mean   :  0.8527          Mean   :0.7939   Mean   :  38.75           
+ 3rd Qu.:      0.0            3rd Qu.:0.0000   3rd Qu.:  0.0000          3rd Qu.:1.0000   3rd Qu.:  55.00           
+ tautoservicio cautoservicio_transacciones     tcajas       tcajas_consultas tcajas_depositos  tcajas_extracciones
+ Min.   :0     Min.   :0                   Min.   :0.0000   Min.   : 0.000   Min.   : 0.0000   Min.   : 0.0000    
+ 1st Qu.:0     1st Qu.:0                   1st Qu.:0.0000   1st Qu.: 0.000   1st Qu.: 0.0000   1st Qu.: 0.0000    
+ Median :0     Median :0                   Median :0.0000   Median : 0.000   Median : 0.0000   Median : 0.0000    
+ Mean   :0     Mean   :0                   Mean   :0.2875   Mean   : 0.213   Mean   : 0.1929   Mean   : 0.2496    
+ 3rd Qu.:0     3rd Qu.:0                   3rd Qu.:1.0000   3rd Qu.: 0.000   3rd Qu.: 0.0000   3rd Qu.: 0.0000    
+  tcajas_otras     ccajeros_propio_transacciones mcajeros_propio  ccajeros_ajenos_transacciones mcajeros_ajenos 
+ Min.   : 0.0000   Min.   : 0.000                Min.   :     0   Min.   : 0.000                Min.   :     0  
+ 1st Qu.: 0.0000   1st Qu.: 0.000                1st Qu.:     0   1st Qu.: 0.000                1st Qu.:     0  
+ Median : 0.0000   Median : 0.000                Median :     0   Median : 0.000                Median :     0  
+ Mean   : 0.1087   Mean   : 2.027                Mean   :  6920   Mean   : 1.007                Mean   :  2402  
+ 3rd Qu.: 0.0000   3rd Qu.: 3.000                3rd Qu.:  9360   3rd Qu.: 1.000                3rd Qu.:  1872  
+ tmovimientos_ultimos90dias Master_marca_atraso Master_cuenta_estado Master_mfinanciacion_limite Master_Fvencimiento
+ Min.   :   0.0             Min.   :0.000       Min.   :10.00        Min.   :       0            Min.   :20070331   
+ 1st Qu.:  58.0             1st Qu.:0.000       1st Qu.:10.00        1st Qu.:   25272            1st Qu.:20210930   
+ Median : 101.0             Median :0.000       Median :10.00        Median :   50544            Median :20220630   
+ Mean   : 113.9             Mean   :0.007       Mean   :10.03        Mean   :  151637            Mean   :20219033   
+ 3rd Qu.: 151.0             3rd Qu.:0.000       3rd Qu.:10.00        3rd Qu.:  215592            3rd Qu.:20221231   
+ Master_Finiciomora Master_msaldototal Master_msaldopesos Master_msaldodolares Master_mconsumospesos
+ Min.   :20180905   Min.   :-357332    Min.   :-357332    Min.   :-83673.6     Min.   :-38111       
+ 1st Qu.:20190205   1st Qu.:      0    1st Qu.:      0    1st Qu.:     0.0     1st Qu.:     0       
+ Median :20190212   Median :      0    Median :      0    Median :     0.0     Median :  1388       
+ Mean   :20189668   Mean   :   8154    Mean   :   7231    Mean   :   923.6     Mean   :  6957       
+ 3rd Qu.:20190212   3rd Qu.:   4710    3rd Qu.:   4194    3rd Qu.:     0.0     3rd Qu.:  6426       
+ Master_mconsumosdolares Master_mlimitecompra Master_madelantopesos Master_madelantodolares Master_fultimo_cierre
+ Min.   :    0.0         Min.   :    983      Min.   :    0.0       Min.   :   0.00         Min.   :20071115     
+ 1st Qu.:    0.0         1st Qu.:  28080      1st Qu.:    0.0       1st Qu.:   0.00         1st Qu.:20190221     
+ Median :    0.0         Median :  56160      Median :    0.0       Median :   0.00         Median :20190228     
+ Mean   :   49.1         Mean   : 167114      Mean   :   66.9       Mean   :   0.09         Mean   :20190182     
+ 3rd Qu.:    0.0         3rd Qu.: 239547      3rd Qu.:    0.0       3rd Qu.:   0.00         3rd Qu.:20190228     
+ Master_mpagado     Master_mpagospesos   Master_mpagosdolares Master_fechaalta   Master_mconsumototal
+ Min.   :     0.0   Min.   :-1664213.3   Min.   :    0.00     Min.   :20000608   Min.   :-38111      
+ 1st Qu.:     0.0   1st Qu.:  -10872.2   1st Qu.:    0.00     1st Qu.:20090210   1st Qu.:     0      
+ Median :     0.0   Median :   -3732.3   Median :    0.00     Median :20121109   Median :  1388      
+ Mean   :   706.5   Mean   :  -10315.3   Mean   :   38.82     Mean   :20118626   Mean   :  6957      
+ 3rd Qu.:     0.0   3rd Qu.:    -897.1   3rd Qu.:    0.00     3rd Qu.:20160229   3rd Qu.:  6426      
+ Master_tconsumos Master_tadelantosefectivo Master_mpagominimo  Visa_marca_atraso Visa_cuenta_estado
+ Min.   :  0.00   Min.   : 0.00             Min.   :      0.0   Min.   :0.00      Min.   :10.00     
+ 1st Qu.:  0.00   1st Qu.: 0.00             1st Qu.:      0.0   1st Qu.:0.00      1st Qu.:10.00     
+ Median :  1.00   Median : 0.00             Median :      0.0   Median :0.00      Median :10.00     
+ Mean   :  3.35   Mean   : 0.03             Mean   :   1157.8   Mean   :0.01      Mean   :10.03     
+ 3rd Qu.:  4.00   3rd Qu.: 0.00             3rd Qu.:    315.9   3rd Qu.:0.00      3rd Qu.:10.00     
+ Visa_mfinanciacion_limite Visa_Fvencimiento  Visa_Finiciomora   Visa_msaldototal  Visa_msaldopesos 
+ Min.   :       0          Min.   :20020930   Min.   :20181204   Min.   :-255248   Min.   :-311715  
+ 1st Qu.:   31590          1st Qu.:20210331   1st Qu.:20190111   1st Qu.:   3023   1st Qu.:   3269  
+ Median :   63180          Median :20230131   Median :20190211   Median :  10273   Median :  11138  
+ Mean   :  165362          Mean   :20615087   Mean   :20189631   Mean   :  21456   Mean   :  22919  
+ 3rd Qu.:  218532          3rd Qu.:20240131   3rd Qu.:20190211   3rd Qu.:  24403   3rd Qu.:  26231  
+ Visa_msaldodolares Visa_mconsumospesos Visa_mconsumosdolares Visa_mlimitecompra Visa_madelantopesos
+ Min.   :-356053    Min.   : -80120     Min.   :    0.00      Min.   :    673    Min.   :    0.00   
+ 1st Qu.:      0    1st Qu.:   1665     1st Qu.:    0.00      1st Qu.:  35100    1st Qu.:    0.00   
+ Median :      0    Median :   6359     Median :    1.15      Median :  70200    Median :    0.00   
+ Mean   :   2188    Mean   :  13975     Mean   :   68.82      Mean   : 182367    Mean   :   65.93   
+ 3rd Qu.:      0    3rd Qu.:  16435     3rd Qu.:    9.51      3rd Qu.: 242813    3rd Qu.:    0.00   
+ Visa_madelantodolares Visa_fultimo_cierre  Visa_mpagado     Visa_mpagospesos   Visa_mpagosdolares
+ Min.   :   0.000      Min.   :20060824    Min.   :      0   Min.   :-1609968   Min.   :    0.00  
+ 1st Qu.:   0.000      1st Qu.:20190221    1st Qu.:      0   1st Qu.:  -25256   1st Qu.:    0.00  
+ Median :   0.000      Median :20190228    Median :      0   Median :  -11804   Median :    0.00  
+ Mean   :   0.331      Mean   :20190197    Mean   :   2002   Mean   :  -21025   Mean   :   55.31  
+ 3rd Qu.:   0.000      3rd Qu.:20190228    3rd Qu.:      0   3rd Qu.:   -4680   3rd Qu.:    0.00  
+ Visa_fechaalta     Visa_mconsumototal Visa_tconsumos    Visa_tadelantosefectivo Visa_mpagominimo   
+ Min.   :19860924   Min.   : -80120    Min.   :  0.000   Min.   : 0.000          Min.   :      0.0  
+ 1st Qu.:20070103   1st Qu.:   1665    1st Qu.:  3.000   1st Qu.: 0.000          1st Qu.:    198.9  
+ Median :20110517   Median :   6359    Median :  6.000   Median : 0.000          Median :    795.6  
+ Mean   :20103253   Mean   :  13975    Mean   :  9.459   Mean   : 0.026          Mean   :   3173.1  
+ 3rd Qu.:20150716   3rd Qu.:  16435    3rd Qu.: 12.000   3rd Qu.: 0.000          3rd Qu.:   2164.5  
+ clase_ternaria    
+ Length:187861     
+ Class :character  
+ Mode  :character  
+                   
+                   
+ [ reached getOption("max.print") -- omitted 2 rows ]
