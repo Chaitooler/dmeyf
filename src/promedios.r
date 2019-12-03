@@ -88,8 +88,10 @@ mymerge <- function(x, y) {
 }
 
 calc_promedios <- function (probs_ldm, probs_mod) {
-  promedios = Reduce(mymerge, list(probs_ldm, probs_mod))
-  promedios[,prob_positivo] = promedios$prob_positivo <- rowMeans(subset(promedios, select = c(prob_positivo, prob_positivo.x)), na.rm = TRUE)
+  promedios = merge(probs_ldm, probs_mod, by="numero_de_cliente", all=TRUE)
+  print(colnames(promedios))
+  promedios$prob_positivo <- rowMeans(subset(promedios, select = c(prob_positivo.y, prob_positivo.x)), na.rm = TRUE)
+  promedios$clase01 <- promedios$clase01.x
   promedios
 }
 
@@ -127,17 +129,70 @@ ganancia(probs_mod01, 0.027)
 ganancia(probs_mod06, 0.027)
 
 
+#Ganancia en MERGE con 0.025
 ganancia(calc_promedios(probs_ldm04, probs_mod04), 0.025)
+ganancia(calc_promedios(probs_ldm03, probs_mod03), 0.025)
+ganancia(calc_promedios(probs_ldm02, probs_mod02), 0.025)
+ganancia(calc_promedios(probs_ldm01, probs_mod01), 0.025)
+ganancia(calc_promedios(probs_ldm06, probs_mod06), 0.025)
 
+#Ganancia en MERGE con 0.027
+ganancia(calc_promedios(probs_ldm04, probs_mod04), 0.027)
+ganancia(calc_promedios(probs_ldm03, probs_mod03), 0.027)
+ganancia(calc_promedios(probs_ldm02, probs_mod02), 0.027)
+ganancia(calc_promedios(probs_ldm01, probs_mod01), 0.027)
+ganancia(calc_promedios(probs_ldm06, probs_mod06), 0.027)
 
+#Ganancia en MERGE con 0.026
+ganancia(calc_promedios(probs_ldm04, probs_mod04), 0.026)
+ganancia(calc_promedios(probs_ldm03, probs_mod03), 0.026)
+ganancia(calc_promedios(probs_ldm02, probs_mod02), 0.026)
+ganancia(calc_promedios(probs_ldm01, probs_mod01), 0.026)
+ganancia(calc_promedios(probs_ldm06, probs_mod06), 0.026)
 
+#Ganancia en MERGE con 0.024
+ganancia(calc_promedios(probs_ldm04, probs_mod04), 0.024)
+ganancia(calc_promedios(probs_ldm03, probs_mod03), 0.024)
+ganancia(calc_promedios(probs_ldm02, probs_mod02), 0.024)
+ganancia(calc_promedios(probs_ldm01, probs_mod01), 0.024)
+ganancia(calc_promedios(probs_ldm06, probs_mod06), 0.024)
 
+#Ganancia en MERGE con 0.0245
+ganancia(calc_promedios(probs_ldm04, probs_mod04), 0.0245)
+ganancia(calc_promedios(probs_ldm03, probs_mod03), 0.0245)
+ganancia(calc_promedios(probs_ldm02, probs_mod02), 0.0245)
+ganancia(calc_promedios(probs_ldm01, probs_mod01), 0.0245)
+ganancia(calc_promedios(probs_ldm06, probs_mod06), 0.0245)
 
+#Ganancia en MERGE con 0.025
+ganancia(calc_promedios(probs_ldm04, probs_mod04), 0.0255)
+ganancia(calc_promedios(probs_ldm03, probs_mod03), 0.0255)
+ganancia(calc_promedios(probs_ldm02, probs_mod02), 0.0255)
+ganancia(calc_promedios(probs_ldm01, probs_mod01), 0.0255)
+ganancia(calc_promedios(probs_ldm06, probs_mod06), 0.0255)
 
-
+######################
 ## Entregable final
 
-fwrite( as.data.table( prediccion_final[ prob_positivo > punto_corte  , "numero_de_cliente" ] ), 
+
+calc_promedios_entrega <- function (probs_ldm, probs_mod) {
+  promedios = merge(probs_ldm, probs_mod, by="numero_de_cliente", all=TRUE)
+  print(colnames(promedios))
+  promedios$prob_positivo <- rowMeans(subset(promedios, select = c(prob_positivo.y, prob_positivo.x)), na.rm = TRUE)
+  promedios
+}
+
+probs_ldmENTREGA = fread('lineademuerte_probabilidades_UBA.txt',
+                    sep= "\t")
+probs_modENTREGA = fread('probs_modelitos201906.txt',
+                    ,
+                    sep= "\t")
+
+prediccion_final = calc_promedios_entrega(probs_ldmENTREGA, probs_modENTREGA)
+
+positivos_final = prediccion_final[ prob_positivo > 0.025  , c("numero_de_cliente", "prob_positivo") ]
+
+fwrite( as.data.table( positivos_final[  , "numero_de_cliente" ] ), 
         file='ENTREGABLE_FINAL.txt', 
         col.names=FALSE, 
         sep="\t", 
